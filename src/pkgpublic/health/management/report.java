@@ -35,7 +35,7 @@ public class report {
                     reps.view_rep();
                     break;
                 case 3:
-                    
+                    reps.del_rep();
                     break;
                 case 4:
                     System.out.print("\nDo you want to exit?(yes/no):");
@@ -107,6 +107,26 @@ public class report {
         String[] col = {"rec_id","p_fname","p_lname","cons_date","doc_name","doc_last","rec_find","med_name"};
         
         conf.viewRecords(sql, header, col);
+    }
+    
+    private void del_rep(){
+         System.out.println("\n");
+        System.out.print("Enter ID to Delete:");
+        int id = sc.nextInt();
+        
+        while(conf.getSingleValue("SELECT rec_id FROM recs WHERE rec_id=?",id)==0){
+        System.out.println("Selected Id doesnmt exist!!!");
+        System.out.print("\nSelect Record Id Again: ");
+        id = sc.nextInt();
+        }
+        
+        System.out.print("Are you sure you want to Delete this item?(yes/no):");
+        String res = sc.next();
+        
+        String sql = "DELETE FROM recs WHERE rec_id = ?";
+        if(res.equals("YES")|| res.equals("yes")|| res.equals("Yes")){
+            conf.deleteRecord(sql,id);
+      }
     }
     
 }
